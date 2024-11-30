@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Button, TextField } from "@mui/material";
 import * as Yup from "yup";
+import { useNavigate } from "react-router";
 
 const initialValues = { email: "", password: "" };
 
@@ -13,6 +14,7 @@ const validationSchema = {
 };
 const Login = () => {
   const [formValue, setFormValue] = useState();
+  const navigate = useNavigate();
 
   const handleSubmit = (values) => {
     console.log("handleSubmit", values);
@@ -71,6 +73,11 @@ const Login = () => {
           </Button>
         </Form>
       </Formik>
+
+      <div className="flex gap-2 items-center justify-center pt-5">
+        <p>if you don't have account?</p>
+        <Button onClick={() => navigate("/register")}>Register</Button>
+      </div>
     </>
   );
 };

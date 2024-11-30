@@ -8,6 +8,7 @@ import {
   TextField,
 } from "@mui/material";
 import * as Yup from "yup";
+import { useNavigate } from "react-router";
 
 const initialValues = {
   firstName: "",
@@ -25,7 +26,7 @@ const validationSchema = {
 };
 const Register = () => {
   const [gender, setGender] = useState("");
-
+  const navigate = useNavigate();
   const handleSubmit = (values) => {
     values.gender = gender;
     console.log("handleSubmit", values);
@@ -110,6 +111,7 @@ const Register = () => {
               onChange={handleChange}
               aria-label="gender"
               name="gender"
+              row
             >
               <FormControlLabel
                 value="female"
@@ -136,6 +138,11 @@ const Register = () => {
           </Button>
         </Form>
       </Formik>
+
+      <div className="flex gap-2 items-center justify-center pt-5">
+        <p>if you have already account?</p>
+        <Button onClick={() => navigate("/login")}>Login</Button>
+      </div>
     </>
   );
 };
