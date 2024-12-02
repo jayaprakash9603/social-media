@@ -58,6 +58,7 @@ const CreatePostModal = ({ handleClose, open }) => {
       dispatch(createPostAction(values));
     },
   });
+
   return (
     <div>
       <Modal
