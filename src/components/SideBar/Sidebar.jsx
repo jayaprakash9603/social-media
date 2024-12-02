@@ -2,10 +2,14 @@ import React from "react";
 import { navigationMenu } from "./SidebarNavigation";
 import { Avatar, Button, Card, Divider, Menu, MenuItem } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 
 const Sidebar = () => {
+  const { auth } = useSelector((store) => store);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -13,6 +17,11 @@ const Sidebar = () => {
     setAnchorEl(null);
   };
 
+  const handleNavigate = (item) => {
+    if (item.title == "Profile") {
+      navigate(`/profile/${auth.user?.id}`);
+    }
+  };
   return (
     <Card className="card h-screen flex flex-col justify-between py-5">
       <div className="space-y-8 pl-5">
@@ -22,7 +31,10 @@ const Sidebar = () => {
 
         <div className="space-y-8">
           {navigationMenu.map((item) => (
-            <div className="flex space-x-3 items-center cursor-pointer">
+            <div
+              onClick={() => handleNavigate(item)}
+              className="flex space-x-3 items-center cursor-pointer"
+            >
               {item.icon}
               <p className="text-xl">{item.title}</p>
             </div>
@@ -37,8 +49,13 @@ const Sidebar = () => {
             <Avatar src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" />
 
             <div>
-              <p className="font-bold"> User Name</p>
-              <p className="opacity-70">@UserName</p>
+              <p className="font-bold">
+                {auth.user?.firstName} {auth.user?.lastName}
+              </p>
+              <p className="opacity-70">
+                @{auth.user?.firstName?.toLowerCase()}
+                {auth.user?.lastName?.toLowerCase()}
+              </p>
             </div>
           </div>
 

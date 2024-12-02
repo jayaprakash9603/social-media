@@ -3,6 +3,8 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Button, TextField } from "@mui/material";
 import * as Yup from "yup";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { loginUserAction } from "../../Redux/Auth/auth.action";
 
 const initialValues = { email: "", password: "" };
 
@@ -14,10 +16,12 @@ const validationSchema = {
 };
 const Login = () => {
   const [formValue, setFormValue] = useState();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = (values) => {
     console.log("handleSubmit", values);
+    dispatch(loginUserAction({ data: values }));
   };
   return (
     <>

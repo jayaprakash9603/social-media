@@ -6,9 +6,18 @@ import CreateReelsForm from "../../components/Reels/CreateReelsForm";
 import Profile from "../Profile/Profile";
 import HomeRight from "../../components/HomeRight/HomeRight";
 import Sidebar from "../../components/SideBar/Sidebar";
+import { useEffect } from "react";
+import { getProfileAction } from "../../Redux/Auth/auth.action";
+import { useDispatch, useSelector } from "react-redux";
 
 const HomePage = () => {
   const location = useLocation();
+  const dispatch = useDispatch();
+  const jwt = localStorage.getItem("jwt");
+  const { auth } = useSelector((store) => store);
+  useEffect(() => {
+    dispatch(getProfileAction(jwt));
+  }, []);
   return (
     <div className="px-20">
       <Grid container spacing={0}>
@@ -31,11 +40,13 @@ const HomePage = () => {
           </Routes>
         </Grid>
 
-        <Grid item lg={3} className="relative">
-          <div className="sticky top-0 w-full">
-            <HomeRight />
-          </div>
-        </Grid>
+        {location.pathname === "/" && (
+          <Grid item lg={3} className="relative">
+            <div className="sticky top-0 w-full">
+              <HomeRight />
+            </div>
+          </Grid>
+        )}
       </Grid>
     </div>
   );

@@ -9,6 +9,8 @@ import {
 } from "@mui/material";
 import * as Yup from "yup";
 import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { registerUserAction } from "../../Redux/Auth/auth.action";
 
 const initialValues = {
   firstName: "",
@@ -27,9 +29,11 @@ const validationSchema = {
 const Register = () => {
   const [gender, setGender] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleSubmit = (values) => {
     values.gender = gender;
     console.log("handleSubmit", values);
+    dispatch(registerUserAction({ data: values }));
   };
   const handleChange = (event) => {
     setGender(event.target.value);
