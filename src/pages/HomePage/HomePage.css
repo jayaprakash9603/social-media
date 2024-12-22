@@ -1,0 +1,22 @@
+/* Add these styles to fix the pagination at the bottom of the screen */
+.page-container {
+  position: relative;
+  min-height: 100vh; /* Ensure it takes the full height of the viewport */
+}
+
+.table-container {
+  overflow-y: auto; /* Allow scrolling if the table overflows */
+  flex-grow: 1; /* Allow the table to take available space */
+}
+
+.fixed-pagination {
+  position: fixed;
+  bottom: 100px;
+  width: 100%;
+  background-color: white;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  display: flex;
+  justify-content: center; /* Center the pagination */
+  z-index: 10; /* Ensure it's above the table content */
+}

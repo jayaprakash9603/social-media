@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router";
 import { api, API_BASE_URL } from "../../config/api";
 import {
   GET_PROFILE_FAILURE,
@@ -11,6 +12,10 @@ import {
   UPDATE_PROFILE_SUCCESS,
 } from "./auth.actionType";
 import axios from "axios";
+
+const redirectToHome = (navigate) => {
+  navigate("/");
+};
 export const loginUserAction = (loginData) => async (dispatch) => {
   dispatch({ type: LOGIN_REQUEST });
   try {
@@ -23,11 +28,15 @@ export const loginUserAction = (loginData) => async (dispatch) => {
       localStorage.setItem("jwt", data.token);
     }
     console.log("login success", data);
-
     dispatch({ type: LOGIN_SUCCESS, payload: data.jwt });
+    return { success: true }; // Return success to trigger navigation in component
   } catch (error) {
     console.log("-------", error);
     dispatch({ type: LOGIN_FAILURE, payload: error });
+    return {
+      success: false,
+      message: error.response?.data?.message || error.message,
+    }; // Return error message
   }
 };
 
@@ -44,9 +53,14 @@ export const registerUserAction = (loginData) => async (dispatch) => {
     }
     console.log("register success", data);
     dispatch({ type: LOGIN_SUCCESS, payload: data.jwt });
+    return { success: true }; // Return success to trigger navigation in component
   } catch (error) {
     console.log("-------", error);
     dispatch({ type: LOGIN_FAILURE, payload: error });
+    return {
+      success: false,
+      message: error.response?.data?.message || error.message,
+    }; // Return error message
   }
 };
 
