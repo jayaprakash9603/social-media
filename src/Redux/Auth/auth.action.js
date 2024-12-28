@@ -107,3 +107,11 @@ export const updateProfileAction = (reqData) => async (dispatch) => {
     });
   }
 };
+
+export const logoutAction = () => (dispatch) => {
+  localStorage.removeItem("jwt");
+
+  dispatch({
+    type: "LOGOUT",
+  });
+};
