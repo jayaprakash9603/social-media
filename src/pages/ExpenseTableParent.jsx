@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import DetailedExpensesTable from "./DetailedExpensesTable";
+import DetailedExpensesTable from "../pages/DetailedExpensesTable/DetailsExpensesTable";
 // import DailySummary from "./DailySummary";
 import ExpensesAudits from "./ExpensesAudits";
 

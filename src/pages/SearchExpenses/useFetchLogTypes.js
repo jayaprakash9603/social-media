@@ -8,7 +8,7 @@ const useFetchLogTypes = () => {
   useEffect(() => {
     const fetchLogTypes = () => {
       axios
-        .get("http://localhost:3000/expenses/expenses-types")
+        .get("http://localhost:8080/expenses/expenses-types")
         .then((response) => {
           setLogTypes(response.data);
           setFilteredLogTypes(response.data);

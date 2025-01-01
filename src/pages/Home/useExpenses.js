@@ -14,28 +14,6 @@ const useExpenses = (jwt) => {
     }
   }, [dispatch, jwt]);
 
-  // Group expenses by date
-  // const groupedExpensesData = useMemo(() => {
-  //   return expenses.reduce((result, expense) => {
-  //     const date = expense.date;
-  //     if (!result[date]) {
-  //       result[date] = [];
-  //     }
-  //     result[date].push(...expense.expenses);
-  //     return result;
-  //   }, {});
-  // }, [expenses]);
-
-  // const dataForTable = useMemo(() => {
-  //   return Object.keys(groupedExpensesData).map((date) => ({
-  //     expenseName: `${new Date(date).toLocaleDateString()}`,
-  //     totalAmount: groupedExpensesData[date].reduce(
-  //       (sum, expense) => sum + expense.amount,
-  //       0
-  //     ),
-  //   }));
-  // }, [groupedExpensesData]);
-
   return { loading, error };
 };
 

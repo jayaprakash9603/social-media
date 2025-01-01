@@ -118,7 +118,7 @@ const ExpensesEmail = () => {
       }
     }
   }, [selectedIndex, filteredLogTypes]);
-
+  const jwt = localStorage.getItem("jwt");
   const handleSendEmail = async () => {
     if (!email) {
       setError("Please enter an email.");
@@ -136,7 +136,13 @@ const ExpensesEmail = () => {
     }
 
     try {
-      const response = await axios.get(url, { params });
+      const response = await axios.get(url, {
+        params,
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      });
+
       // setLoading(false);
       if (response.status === 204) {
         alert("No summaries were found.");
@@ -163,58 +169,60 @@ const ExpensesEmail = () => {
     let url = "";
     let params = { email };
 
+    const baseUrl = "http://localhost:8080/api"; // Use dynamic base URL
+
     switch (searchTerm) {
       case "Today":
-        url = "http://localhost:3000/expenses/today/email";
+        url = `${baseUrl}/expenses/email/today`;
         break;
       case "Yesterday":
-        url = "http://localhost:3000/expenses/yesterday/email";
+        url = `${baseUrl}/expenses/email/yesterday`;
         break;
       case "Last Week":
-        url = "http://localhost:3000/expenses/current-week/email";
+        url = `${baseUrl}/expenses/email/current-week`;
         break;
       case "Current Week":
-        url = "http://localhost:3000/expenses/last-week/email";
+        url = `${baseUrl}/expenses/email/last-week`;
         break;
       case "Current Month":
-        url = "http://localhost:3000/expenses/current-month/email";
+        url = `${baseUrl}/expenses/email/current-month`;
         break;
       case "Last Month":
-        url = "http://localhost:3000/expenses/last-month/email";
+        url = `${baseUrl}/expenses/email/last-month`;
         break;
       case "All Expenses":
-        url = "http://localhost:3000/fetch-expenses/email";
-        break;
-      case "Monthly Summary":
-        url = `http://localhost:3000/monthly-summary/${specificYear}/${specificMonth}/email`;
+        url = `${baseUrl}/expenses/email/all`;
         break;
       case "Within Range Expenses":
-        url = `http://localhost:3000/fetch-expenses-by-date/email`;
-        params.from = fromDay;
-        params.to = toDay;
+        url = `${baseUrl}/expenses/email/range`;
+        params.startDate = fromDay;
+        params.endDate = toDay;
         break;
       case "Expenses By Name":
-        url = "http://localhost:3000/expenses/search/email";
+        url = `${baseUrl}/expenses/email/name`;
         params.expenseName = expenseName;
         break;
       case "Expenses By Payment Method":
-        url = `http://localhost:3000/payment-method/${paymentMethod}/email`;
+        url = `${baseUrl}/expenses/email/payment-method/${paymentMethod}`;
         break;
       case "Expenses By Type and Payment Method":
-        url = `http://localhost:3000/expenses/${category}/${paymentMethod}/email`;
+        url = `${baseUrl}/expenses/email/type-payment-method/${category}/${paymentMethod}`;
+        break;
+      case "Expenses By Type":
+        url = `${baseUrl}/expenses/email/type/${category}`;
         break;
       case "Expenses Within Amount Range":
-        url = `http://localhost:3000/expenses/amount-range/email`;
+        url = `${baseUrl}/expenses/email/amount-range`;
         params.minAmount = minAmount;
         params.maxAmount = maxAmount;
         break;
       case "Particular Month Expenses":
-        url = `http://localhost:3000/expenses/by-month/email`;
+        url = `${baseUrl}/expenses/email/by-month`;
         params.month = startMonth;
         params.year = startYear;
         break;
       case "Particular Date Expenses":
-        url = `http://localhost:3000/expenses/date/email`;
+        url = `${baseUrl}/expenses/email/by-date`;
         params.date = fromDay;
         break;
       default:
@@ -433,6 +441,19 @@ const ExpensesEmail = () => {
             <option value="cash">Cash</option>
             <option value="creditNeedToPaid">Credit Due</option>
             <option value="creditPaid">Credit Paid</option>
+          </select>
+        </div>
+      )}
+      {searchTerm === "Expenses By Type" && (
+        <div className="form-group mb-3">
+          <select
+            className="log-period"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option value="">-- Select Category --</option>
+            <option value="loss">Loss</option>
+            <option value="gain">Gain</option>
           </select>
         </div>
       )}

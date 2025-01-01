@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ExpensesEmail from "./ExpensesEmail";
-import AuditLogsEmailSender from "./AuditLogsEmailSender";
+
 // import ExpenseSummaryEmailSender from "./ExpenseSummaryEmailSender";
 import "../Styles/ReportsGeneration.css";
 import ExpenseTableParent from "./ExpenseTableParent";
@@ -23,7 +23,7 @@ const ReportsGeneration = () => {
         <div className="select-div">
           <select onChange={handleDropdownChange} className="select-dropdown">
             <option value="select">Select Report</option>
-            <option value="auditLogsReport">Audit Logs Report</option>
+
             <option value="expenseReport">Expense Report</option>
             <option value="searchExpenses">Search Expenses</option>
             <option value="searchAudits">Search Audits</option>
@@ -31,7 +31,7 @@ const ReportsGeneration = () => {
         </div>
         <div className="component-div">
           {selectedReport === "select" && <></>}
-          {selectedReport === "auditLogsReport" && <AuditLogsEmailSender />}
+
           {selectedReport === "expenseReport" && <ExpensesEmail />}
 
           {selectedReport === "searchExpenses" && (
